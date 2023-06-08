@@ -100,7 +100,7 @@ namespace acControl.Views.Pages
 
             updateFan();
 
-            GetSystemInfo.CurrentDisplayRrefresh();
+            GetSystemInfo.CurrentDisplayRefresh();
 
             tsModernStandby.IsChecked = Settings.Default.ModernStandby;
 

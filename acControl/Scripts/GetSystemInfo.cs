@@ -197,7 +197,7 @@ namespace acControl.Scripts
         }
 
         public static int currentRefreshRate = 0;
-        public static void CurrentDisplayRrefresh()
+        public static void CurrentDisplayRefresh()
         {
             DEVMODE devMode = new DEVMODE();
             EnumDisplaySettings("\\\\.\\DISPLAY1", -1, ref devMode);

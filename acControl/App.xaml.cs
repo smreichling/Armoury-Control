@@ -132,7 +132,7 @@ namespace acControl
                 xgMobileConnectionService = GetService<XgMobileConnectionService>();
                 GetSystemInfo.getDisplayData();
                 GetSystemInfo.getBattery();
-                GetSystemInfo.CurrentDisplayRrefresh();
+                GetSystemInfo.CurrentDisplayRefresh();
                 SetUpXgMobileDetection();
 
                 SystemEvents.PowerModeChanged += OnPowerModeChanged;
