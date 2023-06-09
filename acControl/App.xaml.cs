@@ -130,7 +130,9 @@ namespace acControl
 
                 location = AppDomain.CurrentDomain.BaseDirectory;
                 xgMobileConnectionService = GetService<XgMobileConnectionService>();
+
                 GetSystemInfo.getDisplayData();
+                GetSystemInfo.printDisplayDevices();
                 GetSystemInfo.getBattery();
                 GetSystemInfo.CurrentDisplayRefresh();
                 SetUpXgMobileDetection();

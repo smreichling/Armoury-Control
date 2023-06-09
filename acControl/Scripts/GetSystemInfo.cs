@@ -134,6 +134,57 @@ namespace acControl.Scripts
             }
         }
 
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+        public struct DISPLAY_DEVICE
+        {
+            [MarshalAs(UnmanagedType.U4)]
+            public int cb;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
+            public string DeviceName;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+            public string DeviceString;
+            [MarshalAs(UnmanagedType.U4)]
+            public int StateFlags;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+            public string DeviceID;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+            public string DeviceKey;
+        }
+
+        [DllImport("user32.dll")]
+        public static extern bool EnumDisplayDevices(string lpDevice, uint iDevNum, ref DISPLAY_DEVICE lpDisplayDevice, uint dwFlags);
+
+        public static void printDisplayDevices()
+        {
+            for (uint displayAdapterNum = 0; true; displayAdapterNum++)
+            {
+                DISPLAY_DEVICE displayAdapter = new DISPLAY_DEVICE();
+                displayAdapter.cb = Marshal.SizeOf(displayAdapter);
+                if (!EnumDisplayDevices(null, displayAdapterNum, ref displayAdapter, 0))
+                {
+                    Debug.WriteLine("All display adapters printed");
+                    break;
+                }
+
+                Debug.WriteLine("Display adapter {0}: {1} || {2}", displayAdapterNum, displayAdapter.DeviceName, displayAdapter.DeviceString);
+
+                for (uint displayNum = 0; true; displayNum++)
+                {
+                    DISPLAY_DEVICE display = new DISPLAY_DEVICE();
+                    display.cb = Marshal.SizeOf(display);
+                    if (!EnumDisplayDevices(displayAdapter.DeviceName, displayNum, ref display, 0))
+                    {
+                        Debug.WriteLine("\tAll displays for this display adapter printed");
+                        break;
+                    }
+
+                    Debug.WriteLine("\tDisplay {0}: {1} || {2}", displayNum, display.DeviceName, display.DeviceString);
+                }
+            }
+        }
+
+
+
         public static int minRefreshRate = 60;
         public static int maxRefreshRate = 60;
         public static int maxVertRes = 0;
